@@ -2,52 +2,33 @@
   <v-container>
     <v-layout justify-center>
       <v-flex xl8 lg10 md12>
-        <table style="width: 600px;">
-          <thead style="background: #fc0">
-          <tr>
-            <td v-for="header in headers" v-bind:key="header">{{ header.text }}</td>
-          </tr>
-          </thead>
-          <tbody style="background: #ccc">
-
-          <tr v-for="item in desserts">
-            <td >{{ item.name }}</td>
-            <td >{{ item.calories }}</td>
-            <td >{{ item.fat }}</td>
-            <td >{{ item.carbs }}</td>
-            <td >{{ item.protein }}</td>
-            <td >{{ item.iron }}</td>
-          </tr>
-          </tbody>
-        </table>
-<!--        <v-data-table
-            :headers="headers"
-            :items="desserts"
-            class="elevation-1"
-            hide-actions
-            fix-header
-        >
-          <template slot="headerCell" slot-scope="props">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
+        <v-data-table
+        :headers="headers"
+        :items="desserts"
+        class="elevation-1"
+        hide-actions
+      >
+        <template slot="headerCell" slot-scope="props">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
             <span v-on="on">
               {{ props.header.text }}
             </span>
-              </template>
-              <span>
+            </template>
+            <span>
                 {{ props.header.text }}
               </span>
-            </v-tooltip>
-          </template>
-          <template v-slot:items="props">
-            <td>{{ props.item.name }}</td>
-            <td class="text-xs-right">{{ props.item.calories }}</td>
-            <td class="text-xs-right">{{ props.item.fat }}</td>
-            <td class="text-xs-right">{{ props.item.carbs }}</td>
-            <td class="text-xs-right">{{ props.item.protein }}</td>
-            <td class="text-xs-right">{{ props.item.iron }}</td>
-          </template>
-        </v-data-table>-->
+          </v-tooltip>
+        </template>
+        <template v-slot:items="props">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-right">{{ props.item.calories }}</td>
+          <td class="text-xs-right">{{ props.item.fat }}</td>
+          <td class="text-xs-right">{{ props.item.carbs }}</td>
+          <td class="text-xs-right">{{ props.item.protein }}</td>
+          <td class="text-xs-right">{{ props.item.iron }}</td>
+        </template>
+      </v-data-table>
       </v-flex>
     </v-layout>
   </v-container>
@@ -326,9 +307,23 @@
 </script>
 
 <style>
-  table {
-    max-height: 50px;
-    width: 600px;
-    overflow: scroll;
+  thead{
+    table-layout: fixed;
+  }
+  tbody{
+    display:block;
+    width: 100%;
+    overflow: auto;
+    height: 80vh;
+  }
+  thead tr {
+    display: block;
+  }
+  th, td {
+    width: 10%;
+  }
+  tr th {
+    position: relative;
+    top: 20px;
   }
 </style>
