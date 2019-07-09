@@ -9,6 +9,7 @@
           </tr>
           </thead>
           <tbody style="background: #ccc">
+
           <tr v-for="item in desserts">
             <td >{{ item.name }}</td>
             <td >{{ item.calories }}</td>
