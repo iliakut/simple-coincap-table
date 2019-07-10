@@ -119,6 +119,7 @@
   }
   thead tr {
     display: block;
+    background-color: rgba(255, 116, 0, 0.27);
   }
   th, td {
     width: 10%;
