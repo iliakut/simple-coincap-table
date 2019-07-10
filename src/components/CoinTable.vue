@@ -148,7 +148,9 @@
     td:nth-child(n+3) {
       display: none;
     }
-
+    tbody{
+      height: 50vh;
+    }
   }
   /*
   * scrollbar style
