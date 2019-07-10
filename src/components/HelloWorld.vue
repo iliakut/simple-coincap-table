@@ -87,10 +87,18 @@
         }
         else if ( tempNumber > 1000000) {
           let pointIndex = number.indexOf(".");
-          let millions = Number(number.slice(0, pointIndex - 6)) / 1000;
+          let millions = Number(number.slice(0, pointIndex - 3)) / 1000;
           return `${millions.toFixed(1)}m`;
         }
-        return tempNumber.toFixed(3);
+        else if ( tempNumber > 1000 ) {
+          let pointIndex = number.indexOf(".");
+          let millions = Number(number.slice(0, pointIndex + 4));
+          return `${millions.toFixed(3)}`;
+        }
+        else if ( tempNumber > 1 ) {
+          return tempNumber.toFixed(3);
+        }
+        return tempNumber.toFixed(9);
   }
     }
   }
