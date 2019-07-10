@@ -128,10 +128,4 @@ export default {
 </script>
 
 <style>
-/*  @media screen and (max-width: 400px) {
-    .mobile-span {
-      font-size: 70%
-    }
-  }*/
-
 </style>

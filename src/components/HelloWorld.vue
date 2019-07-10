@@ -129,6 +129,17 @@
     top: 20px;
   }
   /*
+  * mobile view
+  */
+  @media screen and (max-width: 640px) {
+    th:nth-child(n+3) {
+      display: none;
+    }
+    td:nth-child(n+3) {
+      display: none;
+    }
+  }
+  /*
   * scrollbar style
   */
   tbody:hover::-webkit-scrollbar-thumb { background-color: darkorange; }
