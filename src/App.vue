@@ -4,26 +4,33 @@
       <v-toolbar-title>
         <h3 class="mobile-span">Simple coincap table</h3>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn flat small @click="updateAssets">
-        <span class="mr-2">update top Assets</span>
-      </v-btn>
+
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-spacer></v-spacer>
+          <v-btn flat small @click="updateAssets" v-on="on">
+            <span class="mr-2">update top Assets</span>
+          </v-btn>
+        </template>
+        <span>update 15 currencies with the biggest market cup
+        and rewrite localStorage with it</span>
+      </v-tooltip>
     </v-toolbar>
 
     <v-content>
-      <HelloWorld v-bind:headers="tableHeaders" v-bind:assets="topAssets"/>
+      <CoinTable v-bind:headers="tableHeaders" v-bind:assets="topAssets"/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import CoinTable from './components/CoinTable'
 import axios from 'axios'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CoinTable
   },
   data () {
     return {
@@ -47,17 +54,24 @@ export default {
           value: 'volumeUsd24Hr'
         }
       ],
-      errorServer: ''
+      errorServer: '',
+      socket: null
     }
   },
   computed: {
     topAssetsNames: function() {
       return this.topAssets.map((item) => item.id).join();
+    },
+    socketReadyState: function() {
+      return this.socket.readyState;
     }
-
   },
   methods: {
     getTopAssets: function() {
+      /*
+      * get assets from REST
+      * fill local storage
+      * */
       axios
         .get('https://api.coincap.io/v2/assets')
         .then(response => {
@@ -71,11 +85,18 @@ export default {
         })
     },
     updateAssets: function() {
+      /*
+      * update top Assetds and fill
+      * local storage with new data
+      * */
+      localStorage.removeItem("topAssets");
       this.getTopAssets();
       console.log('topAssets updated');
     },
-    updateTopAssets: function(wsAnswer) {
-      //console.log(wsAnswer);
+    updatePrice: function(wsAnswer) {
+      /*
+      * update price of top 15 Assets
+      */
       let ids = Object.keys(wsAnswer);
       this.topAssets.forEach((item, index) => {
         if (ids.includes(item.id)) {
@@ -84,31 +105,36 @@ export default {
       })
     },
     createWsConnection: function(names) {
+      /*
+      * create WebSocket connection
+      * and define its callbacks
+      */
       let self = this;
-      let socket = new WebSocket(`wss://ws.coincap.io/prices?assets=${names}`);
+      this.socket = new WebSocket(`wss://ws.coincap.io/prices?assets=${names}`);
       // open connection - callback on opening connection
-      socket.onopen = function(event) {
+      this.socket.onopen = function(event) {
         console.log("Connection established");
       };
       // callback on message
-      socket.onmessage = function(event) {
+      this.socket.onmessage = function(event) {
         let data = JSON.parse(event.data);
-        self.updateTopAssets(data);
+        self.updatePrice(data);
       };
       // callback on closing
-      socket.onclose = function(event) {
+      this.socket.onclose = function(event) {
         if (event.wasClean) { //
           console.log(`Connection closed cleanly, code=${event.code} reason=${event.reason}`);
         } else {
           console.log('Connection died');
+          self.errorServer = "error WebSocket died";
         }
       };
       // callback on error
-      socket.onerror = function(error) {
+      this.socket.onerror = function(error) {
+        self.errorServer = "error WebSocket";
         console.log(`${error.message}`);
       };
-    },
-
+    }
   },
   beforeMount() {
     // read data form localStorage if it is not empty
@@ -117,15 +143,13 @@ export default {
       console.log('topAssets from localStorage received');
     }
     // read data from Rest and write it to localStorage
-    if (!localStorage["xrp"]) {
+    if (!localStorage["topAssets"]) {
       this.getTopAssets();
     }
   },
   mounted() {
+    // create WebSocket connection with top Assets
     this.createWsConnection(this.topAssetsNames);
   }
 }
 </script>
-
-<style>
-</style>

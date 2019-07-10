@@ -34,6 +34,7 @@
 
 <script>
   export default {
+    name: 'CoinTable',
     props: {
       headers: {
         type: Array,
@@ -61,7 +62,7 @@
         type: Array,
         default: function() {
           return [{
-            name:"Bitcoin",
+            name:"Currency",
             priceUsd:"0.0",
             marketCapUsd:"0.0",
             volumeUsd24Hr:"0.0"
@@ -74,30 +75,39 @@
     },
     methods: {
       optimizeNumber: function(number) {
+        /*
+        * transform Price into short
+        */
         let tempNumber = Number(number);
+        // if trillion
         if ( tempNumber > 1000000000000 ) {
           let pointIndex = number.indexOf(".");
           let trillions = Number(number.slice(0, pointIndex - 9)) / 1000;
           return `${trillions.toFixed(1)}t`;
         }
+        // if billion
         else if ( tempNumber > 1000000000) {
           let pointIndex = number.indexOf(".");
           let billions = Number(number.slice(0, pointIndex - 6)) / 1000;
           return `${billions.toFixed(1)}b`;
         }
+        // if million
         else if ( tempNumber > 1000000) {
           let pointIndex = number.indexOf(".");
           let millions = Number(number.slice(0, pointIndex - 3)) / 1000;
           return `${millions.toFixed(1)}m`;
         }
+        // if thousand
         else if ( tempNumber > 1000 ) {
           let pointIndex = number.indexOf(".");
           let millions = Number(number.slice(0, pointIndex + 4));
           return `${millions.toFixed(3)}`;
         }
+        // if about 1
         else if ( tempNumber > 1 ) {
           return tempNumber.toFixed(3);
         }
+        // if <= 1
         return tempNumber.toFixed(9);
   }
     }
@@ -142,8 +152,8 @@
   /*
   * scrollbar style
   */
-  tbody:hover::-webkit-scrollbar-thumb { background-color: darkorange; }
-  tbody:active::-webkit-scrollbar-thumb { background-color: darkorange; }
+  tbody:hover::-webkit-scrollbar-thumb { background-color: rgba(255, 75, 3, 0.86); }
+  tbody:active::-webkit-scrollbar-thumb { background-color: rgba(255, 75, 3, 0.86); }
   ::-webkit-scrollbar { width: 7px; height: 7px;}
   ::-webkit-scrollbar-thumb { height: 50px; border-radius: 3px;}
 </style>
