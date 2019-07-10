@@ -2,23 +2,24 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title>
-        <h3 class="mobile-span">Simple coincap table</h3>
+        <span class="mobile-span">Simple coincap table</span>
       </v-toolbar-title>
-
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-spacer></v-spacer>
-          <v-btn flat small @click="updateAssets" v-on="on">
-            <span class="mr-2">update top Assets</span>
-          </v-btn>
-        </template>
-        <span>update 15 currencies with the biggest market cup
-        and rewrite localStorage with it</span>
-      </v-tooltip>
+      <v-spacer></v-spacer>
     </v-toolbar>
 
     <v-content>
       <CoinTable v-bind:headers="tableHeaders" v-bind:assets="topAssets"/>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <div  class="text-xs-center">
+            <v-btn @click="updateAssets" v-on="on" class="justify-center">
+              <span>update top Assets</span>
+            </v-btn>
+          </div>
+        </template>
+        <span>update 15 currencies with the biggest market cup
+        and rewrite localStorage with it</span>
+      </v-tooltip>
     </v-content>
   </v-app>
 </template>
@@ -153,3 +154,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  .mobile-span {
+    font-size: 90%;
+  }
+</style>

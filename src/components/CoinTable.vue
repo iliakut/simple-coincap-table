@@ -148,6 +148,7 @@
     td:nth-child(n+3) {
       display: none;
     }
+
   }
   /*
   * scrollbar style
