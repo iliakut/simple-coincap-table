@@ -4,7 +4,7 @@
       <v-flex xl8 lg10 md12>
         <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="assets"
         class="elevation-1"
         hide-actions
       >
@@ -22,11 +22,9 @@
         </template>
         <template v-slot:items="props">
           <td>{{ props.item.name }}</td>
-          <td class="text-xs-right">{{ props.item.calories }}</td>
-          <td class="text-xs-right">{{ props.item.fat }}</td>
-          <td class="text-xs-right">{{ props.item.carbs }}</td>
-          <td class="text-xs-right">{{ props.item.protein }}</td>
-          <td class="text-xs-right">{{ props.item.iron }}</td>
+          <td>{{ props.item.priceUsd }}</td>
+          <td>{{ props.item.marketCapUsd }}</td>
+          <td>{{ props.item.volumeUsd24Hr }}</td>
         </template>
       </v-data-table>
       </v-flex>
@@ -36,25 +34,46 @@
 
 <script>
   export default {
-    data () {
-      return {
-        headers: [
-          {
-            text: 'Dessert (100g serving)',
+    props: {
+      headers: {
+        type: Array,
+        default: function() {
+          return [{
+            text: 'Name',
             align: 'left',
-            sortable: false,
             value: 'name'
           },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
-        ],
+            {
+              text: 'Price',
+              value: 'priceUsd'
+            },
+            {
+              text: 'Market Cap',
+              value: 'marketCapUsd'
+            },
+            {
+              text: 'Volume 24Hr',
+              value: 'volumeUsd24Hr'
+            }]
+        }
+      },
+      assets: {
+        type: Array,
+        default: function() {
+          return [{
+            name:"Bitcoin",
+            priceUsd:"0.0",
+            marketCapUsd:"0.0",
+            volumeUsd24Hr:"0.0"
+          }]
+        }
+      }
+    },
+    data () {
+      return {
         desserts: [
           {
             name: 'Frozen Yogurt',
-            calories: 159,
             fat: 6.0,
             carbs: 24,
             protein: 4.0,
@@ -316,7 +335,7 @@
   tbody{
     display:block;
     width: 100%;
-    height: 80vh;
+    height: 70vh;
     overflow: auto;
   }
   thead tr {
@@ -336,8 +355,4 @@
   tbody:active::-webkit-scrollbar-thumb { background-color: darkorange; }
   ::-webkit-scrollbar { width: 7px; height: 7px;}
   ::-webkit-scrollbar-thumb { height: 50px; border-radius: 3px;}
-
-  button {
-    background-color: red;
-  }
 </style>

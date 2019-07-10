@@ -11,7 +11,7 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <HelloWorld v-bind:headers="tableHeaders" v-bind:assets="topAssets"/>
     </v-content>
   </v-app>
 </template>
@@ -48,6 +48,26 @@ export default {
   data () {
     return {
       topAssets: [],
+      tableHeaders: [
+        {
+          text: 'Name',
+          align: 'left',
+          value: 'name'
+        },
+        {
+          text: 'Price',
+          value: 'priceUsd'
+        },
+        {
+          text: 'Market Cap',
+          value: 'marketCapUsd'
+        },
+        {
+          text: 'Volume 24Hr',
+          value: 'volumeUsd24Hr'
+        }
+      ],
+      tableData: [],
       errorServer: ''
     }
   },
@@ -70,7 +90,18 @@ export default {
     updateAssets: function() {
       this.getTopAssets();
       console.log('topAssets updated');
+      this.fillHeaders();
     },
+    fillHeaders: function() {
+      for (let item of this.topAssets) {
+        this.tableData.push({
+          name: item.name,
+          priceUsd: item.priceUsd,
+          marketCapUsd: item.marketCapUsd,
+          volumeUsd24Hr: item.volumeUsd24Hr
+        })
+      }
+    }
   },
   beforeMount() {
     // read data form localStorage if it is not empty
