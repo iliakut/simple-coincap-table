@@ -336,4 +336,8 @@
   tbody:active::-webkit-scrollbar-thumb { background-color: darkorange; }
   ::-webkit-scrollbar { width: 7px; height: 7px;}
   ::-webkit-scrollbar-thumb { height: 50px; border-radius: 3px;}
+
+  button {
+    background-color: red;
+  }
 </style>
