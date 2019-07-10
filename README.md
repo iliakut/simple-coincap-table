@@ -29,4 +29,5 @@ then updates its price with websocket.
 The storage updates after updating the page 
 or by button "UPDATE TOP ASSETS" 
 - The App is respinsive.
+- The source of data is coincap.io API.
 ```
