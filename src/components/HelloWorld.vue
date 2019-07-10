@@ -307,14 +307,17 @@
 </script>
 
 <style>
+  /*
+  * table style
+  */
   thead{
     table-layout: fixed;
   }
   tbody{
     display:block;
     width: 100%;
-    overflow: auto;
     height: 80vh;
+    overflow: auto;
   }
   thead tr {
     display: block;
@@ -326,4 +329,11 @@
     position: relative;
     top: 20px;
   }
+  /*
+  * scrollbar style
+  */
+  tbody:hover::-webkit-scrollbar-thumb { background-color: darkorange; }
+  tbody:active::-webkit-scrollbar-thumb { background-color: darkorange; }
+  ::-webkit-scrollbar { width: 7px; height: 7px;}
+  ::-webkit-scrollbar-thumb { height: 50px; border-radius: 3px;}
 </style>
