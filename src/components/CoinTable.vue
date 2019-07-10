@@ -153,7 +153,6 @@
   * scrollbar style
   */
   tbody:hover::-webkit-scrollbar-thumb { background-color: rgba(255, 75, 3, 0.86); }
-  tbody:active::-webkit-scrollbar-thumb { background-color: rgba(255, 75, 3, 0.86); }
   ::-webkit-scrollbar { width: 7px; height: 7px;}
   ::-webkit-scrollbar-thumb { height: 50px; border-radius: 3px;}
 </style>
